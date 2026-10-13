@@ -24,9 +24,9 @@
       --code-color: #0f172a;
       --table-row-alt: #f8fafc;
       --table-hover: #f1f5f9;
-      --note-text: #1e3a8a;
-      --warn-text: #991b1b;
-      --tip-text: #166534;
+      --note-text: #172554;
+      --warn-text: #7f1d1d;
+      --tip-text: #14532d;
       --exercise-bg: #fefce8;
       --exercise-border: #ca8a04;
       --exercise-text: #92400e;
@@ -45,7 +45,7 @@
       --primary: #3b82f6;
       --primary-dark: #1d4ed8;
       --accent:  #60a5fa;
-      --accent-light: #1e293b;
+      --accent-light: #162447;
       --green:   #22c55e;
       --green-light: #064e3b;
       --red:     #ef4444;
@@ -59,9 +59,9 @@
       --code-color: #e5e7eb;
       --table-row-alt: #161e2e;
       --table-hover: #1f2937;
-      --note-text: #93c5fd;
-      --warn-text: #fca5a5;
-      --tip-text: #86efac;
+      --note-text: #bfdbfe;
+      --warn-text: #fecaca;
+      --tip-text: #bbf7d0;
       --exercise-bg: #291e05;
       --exercise-border: #a16207;
       --exercise-text: #fef08a;
@@ -261,7 +261,7 @@
     /* ── Explanations & Headings ── */
     .explanation { margin-bottom: 20px; font-size: .96rem; color: var(--text); }
     .explanation h3 { font-size: 1.08rem; color: var(--primary); margin: 18px 0 8px; font-weight: 700; }
-    .explanation h4 { font-size: .98rem; color: #1e293b; margin: 12px 0 6px; font-weight: 600; }
+    .explanation h4 { font-size: .98rem; color: var(--text); margin: 12px 0 6px; font-weight: 600; }
     .explanation p { margin-bottom: 10px; }
     .explanation ul, .explanation ol { padding-right: 22px; margin-bottom: 12px; }
     .explanation li { margin-bottom: 5px; }
@@ -273,18 +273,46 @@
     tr:nth-child(even) td { background: var(--table-row-alt); }
     tr:hover td { background: var(--table-hover); }
 
-    /* ── Note Callouts ── */
+    /* ── Note Callouts (High Contrast UI/UX) ── */
     .note {
       border-right: 5px solid var(--accent);
       background: var(--accent-light);
-      padding: 12px 18px;
+      padding: 14px 20px;
       border-radius: 8px;
-      font-size: .92rem;
-      margin: 14px 0;
-      color: #1e3a8a;
+      font-size: .94rem;
+      margin: 16px 0;
+      color: var(--note-text);
+      line-height: 1.8;
     }
-    .note.warn { border-color: var(--red); background: var(--red-light); color: #991b1b; }
-    .note.tip  { border-color: var(--green); background: var(--green-light); color: #166534; }
+    .note b, .note strong, .note ol, .note ul, .note li, .note p {
+      color: var(--note-text) !important;
+    }
+    .note code {
+      background: rgba(255, 255, 255, 0.15) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
+    }
+    body:not(.dark) .note code {
+      background: #ffffff !important;
+      color: #1e3a8a !important;
+      border-color: #bfdbfe !important;
+    }
+    .note.warn {
+      border-color: var(--red);
+      background: var(--red-light);
+      color: var(--warn-text);
+    }
+    .note.warn b, .note.warn strong, .note.warn ol, .note.warn ul, .note.warn li, .note.warn p {
+      color: var(--warn-text) !important;
+    }
+    .note.tip {
+      border-color: var(--green);
+      background: var(--green-light);
+      color: var(--tip-text);
+    }
+    .note.tip b, .note.tip strong, .note.tip ol, .note.tip ul, .note.tip li, .note.tip p {
+      color: var(--tip-text) !important;
+    }
 
     /* ── Compiler Playground ── */
     .compiler-block { margin-top: 20px; }
@@ -1380,7 +1408,7 @@ nums.Clear();                         // حذف كافة العناصر</code></
 <footer>
   🎓 <strong>C# & DSA Comprehensive Interactive Reference</strong> — مهندس أحمد الفلاح
   <br>
-  مبني وموثق وفق أعلى المعايير الهندسية بالتعاون بين <strong>Antigravity & OpenCode</strong> | مدعوم بمحرر الأكواد المباشر OneCompiler
+  مبني وموثق وفق أعلى المعايير الهندسية بالتعاون مع <strong>Fel7o</strong> | مدعوم بمحرر الأكواد المباشر OneCompiler
 </footer>
 
 <!-- ═══════════════ SCRIPT ═══════════════ -->
