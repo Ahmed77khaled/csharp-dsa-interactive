@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>C# & DSA — المرجع التفاعلي الشامل (19 قسماً)</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-dark: #172554;
+      --accent:  #2563eb;
+      --accent-light: #dbeafe;
+      --green:   #16a34a;
+      --green-light: #dcfce7;
+      --red:     #dc2626;
+      --red-light: #fee2e2;
+      --bg:      #f8fafc;
+      --card:    #ffffff;
+      --border:  #e2e8f0;
+      --text:    #1e293b;
+      --muted:   #64748b;
+      --radius:  12px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      direction: rtl;
+      text-align: right;
+    }
+
+    /* ── LTR & BiDi Isolation for Code ── */
+    code, pre, kbd, samp {
+      direction: ltr !important;
+      unicode-bidi: isolate !important;
+      text-align: left;
+      font-family: 'Consolas', 'Courier New', monospace;
+    }
+    .explanation code, td code, .note code, p code, li code, .exercise code, .pitfall-box code {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      padding: 2px 7px;
+      border-radius: 5px;
+      font-size: .88rem;
+      direction: ltr !important;
+      unicode-bidi: isolate !important;
+      display: inline-block;
+      vertical-align: baseline;
+      text-align: left;
+      color: #0f172a;
+    }
+    pre {
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 14px 18px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 10px 0;
+      direction: ltr !important;
+      unicode-bidi: isolate !important;
+      text-align: left;
+      font-size: .9rem;
+    }
+    pre code {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+      color: inherit !important;
+      display: block !important;
+    }
+
+    /* ── Header ── */
+    header {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--accent));
+      color: #fff;
+      padding: 42px 20px 32px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 8px; font-weight: 800; }
+    header p  { font-size: 1.05rem; opacity: .92; max-width: 720px; margin: 0 auto; }
+    .badge-bar {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+    .badge {
+      background: rgba(255,255,255,0.18);
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: .82rem;
+      font-weight: 600;
+      backdrop-filter: blur(4px);
+    }
+
+    /* ── TOC & Navigation ── */
+    nav.toc {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 900px;
+      margin: 28px auto 0;
+      padding: 24px 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.03);
+    }
+    nav.toc .toc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    nav.toc h2 { font-size: 1.25rem; color: var(--primary); }
+    .search-box {
+      padding: 8px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: .88rem;
+      width: 240px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-box:focus { border-color: var(--accent); }
+    nav.toc ol { padding-right: 20px; columns: 2; column-gap: 36px; }
+    nav.toc li { margin-bottom: 7px; font-size: .92rem; }
+    nav.toc a  { color: var(--accent); text-decoration: none; font-weight: 500; transition: color .2s; }
+    nav.toc a:hover { color: var(--primary); text-decoration: underline; }
+
+    /* ── Main Layout ── */
+    main {
+      max-width: 900px;
+      margin: 32px auto 60px;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── Section Card ── */
+    .section-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: box-shadow .2s;
+    }
+    .section-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.05); }
+    .sec-header {
+      background: var(--primary);
+      color: #fff;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .sec-header .num {
+      background: rgba(255,255,255,0.22);
+      border-radius: 8px;
+      min-width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: .95rem; flex-shrink: 0;
+    }
+    .sec-header h2 { font-size: 1.05rem; flex: 1; font-weight: 600; }
+    .sec-header .arrow { transition: transform .3s; font-size: .9rem; opacity: .8; }
+    .section-card.collapsed .arrow { transform: rotate(-90deg); }
+    .sec-body { padding: 24px; }
+    .section-card.collapsed .sec-body { display: none; }
+
+    /* ── Explanations & Headings ── */
+    .explanation { margin-bottom: 20px; font-size: .96rem; color: #334155; }
+    .explanation h3 { font-size: 1.08rem; color: var(--primary); margin: 18px 0 8px; font-weight: 700; }
+    .explanation h4 { font-size: .98rem; color: #1e293b; margin: 12px 0 6px; font-weight: 600; }
+    .explanation p { margin-bottom: 10px; }
+    .explanation ul, .explanation ol { padding-right: 22px; margin-bottom: 12px; }
+    .explanation li { margin-bottom: 5px; }
+
+    /* ── Tables (Strict RTL Columns) ── */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+    th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: right; font-weight: 600; }
+    td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: #f8fafc; }
+    tr:hover td { background: #f1f5f9; }
+
+    /* ── Note Callouts ── */
+    .note {
+      border-right: 5px solid var(--accent);
+      background: var(--accent-light);
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-size: .92rem;
+      margin: 14px 0;
+      color: #1e3a8a;
+    }
+    .note.warn { border-color: var(--red); background: var(--red-light); color: #991b1b; }
+    .note.tip  { border-color: var(--green); background: var(--green-light); color: #166534; }
+
+    /* ── Compiler Playground ── */
+    .compiler-block { margin-top: 20px; }
+    .compiler-block label {
+      display: block;
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .compiler-block label span { color: var(--green); font-weight: normal; }
+    .iframe-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid var(--primary);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+    .iframe-wrap iframe {
+      width: 100%;
+      height: 440px;
+      border: none;
+      display: block;
+    }
+
+    /* ── Exercise ── */
+    .exercise {
+      background: #fefce8;
+      border: 1px dashed #ca8a04;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-top: 18px;
+      font-size: .92rem;
+    }
+    .exercise strong { color: #92400e; }
+
+    /* ── Common Pitfalls Cards ── */
+    .pitfall-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .pitfall-box {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      background: #fff;
+    }
+    .pitfall-box h4 { margin-bottom: 8px; font-size: 1rem; color: var(--primary); }
+    .diff-container { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+    .diff-bad, .diff-good { flex: 1; min-width: 260px; padding: 12px 14px; border-radius: 6px; font-size: .88rem; }
+    .diff-bad { background: #fef2f2; border-right: 4px solid var(--red); color: #991b1b; }
+    .diff-good { background: #f0fdf4; border-right: 4px solid var(--green); color: #166534; }
+
+    /* ── Checklist ── */
+    .checklist-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      transition: all .2s;
+    }
+    .check-item:hover { background: #f1f5f9; }
+    .check-item.done {
+      background: #f0fdf4;
+      border-color: #86efac;
+      text-decoration: line-through;
+      color: #166534;
+    }
+    .check-item input[type="checkbox"] {
+      width: 18px; height: 18px;
+      accent-color: var(--green);
+      cursor: pointer;
+    }
+
+    /* ── Back to Top Button ── */
+    #backToTop {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 44px; height: 44px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 99;
+      transition: background .2s, transform .2s;
+    }
+    #backToTop:hover { background: var(--accent); transform: translateY(-3px); }
+
+    /* ── Footer ── */
+    footer {
+      background: #fff;
+      text-align: center;
+      padding: 28px 20px;
+      font-size: .88rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+    footer strong { color: var(--primary); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      nav.toc ol { columns: 1; }
+      header h1 { font-size: 1.6rem; }
+      .iframe-wrap iframe { height: 360px; }
+      .diff-container { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header>
+  <h1>💻 C# & DSA — المرجع التفاعلي الشامل</h1>
+  <p>مرجع شامل لأساسيات C# وهياكل البيانات والتعقيد الحسابي، منظّم ومزوّد بمحرر كود تفاعلي مدمج لكل درس</p>
+  <div class="badge-bar">
+    <span class="badge">📘 19 قسماً معيارياً</span>
+    <span class="badge">🧪 محرر كود OneCompiler مدمج</span>
+    <span class="badge">⚡ Big-O & Complexity</span>
+    <span class="badge">☑️ قائمة مراجعة تفاعلية</span>
+  </div>
+</header>
+
+<!-- ═══════════════ TOC ═══════════════ -->
+<nav class="toc">
+  <div class="toc-header">
+    <h2>📋 فهرس المحتويات (19 قسماً)</h2>
+    <input type="text" id="tocSearch" class="search-box" placeholder="🔍 ابحث في الدروس..." onkeyup="filterToc()" />
+  </div>
+  <ol id="tocList">
+    <li><a href="#s1">1. Console Output, Comments & Variables</a></li>
+    <li><a href="#s2">2. Constants & Data Types</a></li>
+    <li><a href="#s3">3. Type Casting & Conversion</a></li>
+    <li><a href="#s4">4. User Input, Arithmetic & Assignment Operators</a></li>
+    <li><a href="#s5">5. Comparison, Logical Operators & Strings</a></li>
+    <li><a href="#s6">6. String Methods & If Statements</a></li>
+    <li><a href="#s7">7. Else If, Ternary & Switch</a></li>
+    <li><a href="#s8">8. While, Do-While & For Loops</a></li>
+    <li><a href="#s9">9. Nested Loops & Foreach</a></li>
+    <li><a href="#s10">10. Break, Continue & One-Dimensional Arrays</a></li>
+    <li><a href="#s11">11. Array Traversal & Array Members</a></li>
+    <li><a href="#s12">12. Multidimensional & Jagged Arrays</a></li>
+    <li><a href="#s13">13. Methods, Parameters & Overloading</a></li>
+    <li><a href="#s14">14. Default Parameters & Return Values</a></li>
+    <li><a href="#s15">15. ref & out Parameters</a></li>
+    <li><a href="#s16">16. List&lt;T&gt; — Dynamic Collection</a></li>
+    <li><a href="#s17">17. Big-O: Time & Space Complexity</a></li>
+    <li><a href="#s18">18. Common Pitfalls & Coding Guidelines</a></li>
+    <li><a href="#s19">19. Revision Checklist — قائمة التحقق للاختبار</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════════ MAIN ═══════════════ -->
+<main>
+
+  <!-- ── 1. Console Output, Comments & Variables ── -->
+  <div class="section-card" id="s1">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">1</div>
+      <h2>Console Output, Comments & Variables</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🖥️ Output to screen</h3>
+        <ul>
+          <li><code>Console.Write();</code> → عرض المخرجات على الشاشة بدون سطر جديد.</li>
+          <li><code>Console.WriteLine();</code> → عرض المخرجات والنزول لسطر جديد.</li>
+        </ul>
+        <h3>💬 Comments (التعليقات)</h3>
+        <ul>
+          <li><code>// تعليق سطر واحد</code></li>
+          <li><code>/* تعليق متعدد الأسطر */</code></li>
+        </ul>
+        <h3>📦 Variables (المتغيرات)</h3>
+        <pre><code>int x;               // declaration (إعلان)
+x = 123;             // initialization (تعيين قيمة)
+int x = 123;         // declaration + initialization
+
+Console.WriteLine(x);                         // 123
+Console.WriteLine("this is my number: " + x); // this is my number: 123</code></pre>
+        <p><b>تعريف أكثر من متغير من نفس النوع:</b> <code>int x = 5, y = 6, z = 50;</code></p>
+        <div class="note">
+          <b>قواعد تسمية المتغيرات (Naming Rules):</b>
+          <ol>
+            <li>تحتوي على حروف وأرقام والشرطة السفلية <code>_</code>.</li>
+            <li>تبدأ بحرف أو بشرطة سفلية <code>_</code>.</li>
+            <li>يُفضل أن تبدأ بحرف صغير، ولا تحتوي على مسافات إطلاقاً.</li>
+            <li>حساسة لحالة الأحرف (Case Sensitive) → <code>myVar</code> ≠ <code>myvar</code>.</li>
+            <li>حظر استخدام الكلمات المحجوزة في C# مثل <code>int</code>.</li>
+            <li>يجب أن تكون الأسماء فريدة ومُعبرة ووصفية.</li>
+          </ol>
+        </div>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 جرّب الكود بنفسك <span>← اضغط Run وشاهد النتيجة</span></label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20x%20%3D%20123%3B%0A%20%20%20%20int%20a%20%3D%205%2C%20b%20%3D%206%2C%20c%20%3D%2050%3B%0A%20%20%20%20Console.WriteLine(x)%3B%0A%20%20%20%20Console.WriteLine(%22this%20is%20my%20number%3A%20%22%20%2B%20x)%3B%0A%20%20%20%20Console.WriteLine(%22Sum%3A%20%22%20%2B%20(a%20%2B%20b%20%2B%20c))%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="exercise">
+        <strong>✏️ تمرين تطبيقي:</strong> قم بتعريف متغيرين <code>num1</code> و <code>num2</code>، واطبع ناتج ضربهما في رسالة توضيحية.
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. Constants & Data Types ── -->
+  <div class="section-card" id="s2">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">2</div>
+      <h2>Constants & Data Types</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🔒 Constants (الثوابت)</h3>
+        <p>يتم تعريف المتغير بـ <code>const</code> ليصبح للقراءة فقط وغير قابل للتعديل بعد تعريفه:</p>
+        <pre><code>const int myNum = 15;
+// myNum = 20; // ❌ Compile Error: Cannot assign to constant</code></pre>
+        <h3>📊 Data Types (أنواع البيانات)</h3>
+        <table>
+          <thead>
+            <tr><th>#</th><th>Type</th><th>Examples</th><th>Size</th><th>Category</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td><code>int</code></td><td>40, 50</td><td>4 bytes</td><td>Integer number</td></tr>
+            <tr><td>2</td><td><code>long</code></td><td>60, 70</td><td>8 bytes</td><td>Integer number</td></tr>
+            <tr><td>3</td><td><code>float</code></td><td>5.5, 6.6</td><td>4 bytes</td><td>Fractional number</td></tr>
+            <tr><td>4</td><td><code>double</code></td><td>7.7, 8.8</td><td>8 bytes</td><td>Fractional number</td></tr>
+            <tr><td>5</td><td><code>bool</code></td><td>true, false</td><td>1 byte</td><td>Boolean</td></tr>
+            <tr><td>6</td><td><code>char</code></td><td>'A', 'B'</td><td>2 bytes</td><td>Character</td></tr>
+            <tr><td>7</td><td><code>string</code></td><td>"Mohamed"</td><td>2 bytes per char</td><td>String</td></tr>
+          </tbody>
+        </table>
+        <div class="note tip">
+          💡 <b>ملاحظة الدقة:</b> النوع <code>float</code> يكفي لـ 7 أرقام عشرية، بينما النوع <code>double</code> يدعم دقة حتى 15 رقماً عشرياً.
+        </div>
+        <h4>قواعد اللواحق (Literal Suffix Rules):</h4>
+        <table>
+          <thead><tr><th>النوع</th><th>اللاحقة الإلزامية</th><th>طريقة الإحاطة</th></tr></thead>
+          <tbody>
+            <tr><td><code>long</code></td><td><code>L</code> في النهاية</td><td>—</td></tr>
+            <tr><td><code>float</code></td><td><code>F</code> في النهاية</td><td>—</td></tr>
+            <tr><td><code>double</code></td><td><code>D</code> في النهاية</td><td>—</td></tr>
+            <tr><td><code>char</code></td><td>—</td><td>علامات تنصيص فردية <code>' '</code></td></tr>
+            <tr><td><code>string</code></td><td>—</td><td>علامات تنصيص زوجية <code>" "</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 جرّب أنواع البيانات واللواحق</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20x%20%3D%2040%3B%0A%20%20%20%20long%20big%20%3D%20150000000L%3B%0A%20%20%20%20float%20f%20%3D%205.75F%3B%0A%20%20%20%20double%20d%20%3D%205.755D%3B%0A%20%20%20%20bool%20isFirstTask%20%3D%20false%3B%0A%20%20%20%20char%20myGrade%20%3D%20'A'%3B%0A%20%20%20%20string%20greeting%20%3D%20%22Mohamed%22%3B%0A%20%20%20%20Console.WriteLine(%22int%3A%20%22%20%2B%20x)%3B%0A%20%20%20%20Console.WriteLine(%22long%3A%20%22%20%2B%20big)%3B%0A%20%20%20%20Console.WriteLine(%22float%3A%20%22%20%2B%20f)%3B%0A%20%20%20%20Console.WriteLine(%22double%3A%20%22%20%2B%20d)%3B%0A%20%20%20%20Console.WriteLine(%22char%3A%20%22%20%2B%20myGrade)%3B%0A%20%20%20%20Console.WriteLine(%22string%3A%20%22%20%2B%20greeting)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. Type Casting & Conversion ── -->
+  <div class="section-card" id="s3">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">3</div>
+      <h2>Type Casting & Conversion</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🔄 التحويل بين الأنواع (Type Casting)</h3>
+        <p>هو إسناد قيمة من نوع بيانات إلى نوع آخر. ينقسم في C# إلى نوعين رئيسيين:</p>
+        <h4>1. Implicit Casting (تلقائي)</h4>
+        <p>التحويل التلقائي من نوع <b>أصغر</b> حجماً إلى نوع <b>أكبر</b> دون فقد في البيانات:</p>
+        <p><code>char → int → long → float → double</code></p>
+        <pre><code>int myInt = 9;
+double myDouble = myInt; // يتم التحويل تلقائياً int → double</code></pre>
+        <h4>2. Explicit Casting (يدوي)</h4>
+        <p>التحويل اليدوي من نوع <b>أكبر</b> إلى نوع <b>أصغر</b> عن طريق كتابة النوع بين قوسين <code>(type)</code>:</p>
+        <p><code>double → float → long → int → char</code></p>
+        <pre><code>double myDouble = 9.78;
+int myInt = (int)myDouble; // double → int يدوي
+Console.Write(myInt);      // 9 (يتم قطع الكسر العشري وليس تقريبه)</code></pre>
+        <div class="note warn">
+          ⚠️ <b>تنبيه:</b> الـ Explicit Casting يقوم بحذف الجزء العشري (Truncate) تماماً، فالقيمة <code>9.78</code> تصبح <code>9</code> وليست <code>10</code>.
+        </div>
+        <h4>3. دوال الفئة Convert</h4>
+        <p>طريقة مدمجة وشاملة للتحويلات الصريحة بين الأنواع المختلفة:</p>
+        <ul>
+          <li><code>Convert.ToBoolean()</code></li>
+          <li><code>Convert.ToDouble()</code></li>
+          <li><code>Convert.ToString()</code></li>
+          <li><code>Convert.ToInt32()</code> (تحويل إلى <code>int</code>)</li>
+          <li><code>Convert.ToInt64()</code> (تحويل إلى <code>long</code>)</li>
+        </ul>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة الـ Casting والـ Convert</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20%2F%2F%201.%20Implicit%0A%20%20%20%20int%20i%20%3D%209%3B%0A%20%20%20%20double%20d%20%3D%20i%3B%0A%20%20%20%20Console.WriteLine(%22Implicit%3A%20%22%20%2B%20d)%3B%0A%0A%20%20%20%20%2F%2F%202.%20Explicit%0A%20%20%20%20double%20price%20%3D%209.78%3B%0A%20%20%20%20int%20roundedPrice%20%3D%20(int)price%3B%0A%20%20%20%20Console.WriteLine(%22Explicit%20(truncated)%3A%20%22%20%2B%20roundedPrice)%3B%0A%0A%20%20%20%20%2F%2F%203.%20Convert%20class%0A%20%20%20%20string%20text%20%3D%20%22123%22%3B%0A%20%20%20%20int%20parsed%20%3D%20Convert.ToInt32(text)%3B%0A%20%20%20%20Console.WriteLine(%22Convert%20result%3A%20%22%20%2B%20(parsed%20%2B%201))%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 4. User Input, Arithmetic & Assignment Operators ── -->
+  <div class="section-card" id="s4">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">4</div>
+      <h2>User Input, Arithmetic & Assignment Operators</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>⌨️ User Input (إدخال المستخدم)</h3>
+        <p>الدالة <code>Console.ReadLine()</code> ترجع دائماً نصاً (<code>string</code>):</p>
+        <pre><code>string username = Console.ReadLine();
+Console.WriteLine("username: " + username);
+
+// لقراءة رقم صحيح من المستخدم:
+int age = Convert.ToInt32(Console.ReadLine());</code></pre>
+        <h3>➕ Arithmetic Operators (العمليات الحسابية)</h3>
+        <table>
+          <thead><tr><th>المعامل</th><th>الوظيفة</th><th>مثال</th><th>الناتج</th></tr></thead>
+          <tbody>
+            <tr><td><code>+</code></td><td>Addition (جمع)</td><td><code>5 + 3</code></td><td>8</td></tr>
+            <tr><td><code>-</code></td><td>Subtraction (طرح)</td><td><code>5 - 3</code></td><td>2</td></tr>
+            <tr><td><code>*</code></td><td>Multiplication (ضرب)</td><td><code>5 * 3</code></td><td>15</td></tr>
+            <tr><td><code>/</code></td><td>Division (قسمة أعداد صحيحة)</td><td><code>5 / 2</code></td><td>2</td></tr>
+            <tr><td><code>%</code></td><td>Modulus (باقي القسمة)</td><td><code>5 % 2</code></td><td>1</td></tr>
+          </tbody>
+        </table>
+        <h3>⚡ الـ Increment / Decrement (الزيادة والنقصان)</h3>
+        <table>
+          <thead><tr><th>النوع</th><th>Post (لاحق)</th><th>Pre (سابق)</th><th>الفرق</th></tr></thead>
+          <tbody>
+            <tr><td>Increment</td><td><code>x++</code></td><td><code>++x</code></td><td>الـ Post يُسند أولاً ثم يزيد، والـ Pre يزيد أولاً ثم يُسند</td></tr>
+            <tr><td>Decrement</td><td><code>x--</code></td><td><code>--x</code></td><td>نفس القاعدة في النقصان بمقدار 1</td></tr>
+          </tbody>
+        </table>
+        <pre><code>int x = 5;
+int y = x++; // y تأخذ 5 ثم تصبح x قيمتها 6
+
+int a = 5;
+int b = ++a; // تصبح a أولاً 6 ثم تأخذ b القيمة 6</code></pre>
+        <h3>📝 Assignment Operators (معاملات التعيين)</h3>
+        <p><code>=</code> تعيين، <code>+=</code> جمع وتعيين، <code>-=</code>، <code>*=</code>، <code>/=</code>، <code>%=</code></p>
+        <pre><code>int x = 10;
+int y = 5;    // ✅ يجب التعريف والإسناد أولاً
+y += x;       // تعادل y = y + x وتصبح النتيجة 15</code></pre>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة العمليات ومعاملات الزيادة</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20a%20%3D%2010%2C%20b%20%3D%203%3B%0A%20%20%20%20Console.WriteLine(%22Div%3A%20%22%20%2B%20(a%20%2F%20b))%3B%20%20%20%20%20%2F%2F%203%20(integer)%0A%20%20%20%20Console.WriteLine(%22Mod%3A%20%22%20%2B%20(a%20%25%20b))%3B%20%20%20%20%20%2F%2F%201%0A%0A%20%20%20%20int%20x%20%3D%205%3B%0A%20%20%20%20int%20y%20%3D%20x%2B%2B%3B%0A%20%20%20%20Console.WriteLine(%22Post%20-%3E%20y%3A%22%20%2B%20y%20%2B%20%22%2C%20x%3A%22%20%2B%20x)%3B%20%2F%2F%20y%3D5%2C%20x%3D6%0A%0A%20%20%20%20int%20m%20%3D%205%3B%0A%20%20%20%20int%20n%20%3D%20%2B%2Bm%3B%0A%20%20%20%20Console.WriteLine(%22Pre%20--%3E%20n%3A%22%20%2B%20n%20%2B%20%22%2C%20m%3A%22%20%2B%20m)%3B%20%2F%2F%20n%3D6%2C%20m%3D6%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. Comparison, Logical Operators & Strings ── -->
+  <div class="section-card" id="s5">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">5</div>
+      <h2>Comparison, Logical Operators & Strings</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>⚖️ Comparison Operators (معاملات المقارنة)</h3>
+        <p>ترجع دائماً قيمة منطقية (<code>bool</code>): <code>==</code> متساوي، <code>!=</code> لا يساوي، <code>&gt;</code> أكبر، <code>&lt;</code> أصغر، <code>&gt;=</code>، <code>&lt;=</code>.</p>
+        <h3>🔀 Logical Operators (المعاملات المنطقية)</h3>
+        <ul>
+          <li><code>&&</code> (AND) → صحيح فقط إذا تحقق كلا الشرطين.</li>
+          <li><code>||</code> (OR) → صحيح إذا تحقق أحد الشرطين على الأقل.</li>
+          <li><code>!</code> (NOT) → يعكس النتيجة المنطقية.</li>
+        </ul>
+        <h3>📜 Strings (السلاسل النصية)</h3>
+        <h4>خاصية الطول:</h4>
+        <pre><code>string name = "Mohamed";
+Console.WriteLine(name.Length); // 7</code></pre>
+        <h4>دمج النصوص (Concatenation) — 3 طرق:</h4>
+        <pre><code>string firstname = "John ";
+string lastname = "Doe";
+
+// 1. باستخدام معامل +
+Console.WriteLine(firstname + lastname);              // John Doe
+
+// 2. دالة string.Concat (تأخذ فاصلة بين المتغيرات وليس علامة +)
+Console.WriteLine(string.Concat(firstname, lastname)); // John Doe
+
+// 3. String Interpolation باستخدام علامة $
+Console.WriteLine($"{firstname} {lastname}");          // John Doe</code></pre>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة دمج النصوص والمقارنات</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20string%20fname%20%3D%20%22John%20%22%3B%0A%20%20%20%20string%20lname%20%3D%20%22Doe%22%3B%0A%20%20%20%20Console.WriteLine(fname%20%2B%20lname)%3B%0A%20%20%20%20Console.WriteLine(string.Concat(fname%2C%20lname))%3B%0A%20%20%20%20Console.WriteLine(%24%22%7Bfname%7D%7Blname%7D%22)%3B%0A%20%20%20%20bool%20check%20%3D%20(5%20%3E%203)%20%26%26%20(10%20%3D%3D%2010)%3B%0A%20%20%20%20Console.WriteLine(%22Condition%3A%20%22%20%2B%20check)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 6. String Methods & If Statements ── -->
+  <div class="section-card" id="s6">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">6</div>
+      <h2>String Methods & If Statements</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <div class="note tip">
+          💡 <b>ملاحظة جوهرية:</b> السلاسل النصية في C# غير قابلة للتعديل في مكانها (<b>Immutable</b>)؛ كل دالة نصية تُرجع نصاً جديداً تماماً ولا تُغير في الأصل.
+        </div>
+        <h3>🛠️ دوال النصوص الأساسية (8 Methods)</h3>
+        <table>
+          <thead><tr><th>الدالة</th><th>الوظيفة</th><th>مثال</th><th>الناتج</th></tr></thead>
+          <tbody>
+            <tr><td><code>name[0]</code></td><td>الوصول بالحرف (Indexing)</td><td><code>"Mohamed"[0]</code></td><td>'M'</td></tr>
+            <tr><td><code>IndexOf()</code></td><td>موقع أول ظهور (-1 إذا لم يوجد)</td><td><code>name.IndexOf("o")</code></td><td>1</td></tr>
+            <tr><td><code>Substring(start)</code></td><td>اقتطاع جزء من النص</td><td><code>"John Doe".Substring(5)</code></td><td>"Doe"</td></tr>
+            <tr><td><code>ToUpper()</code></td><td>تحويل النص لحروف كبيرة</td><td><code>"Mohamed".ToUpper()</code></td><td>"MOHAMED"</td></tr>
+            <tr><td><code>ToLower()</code></td><td>تحويل النص لحروف صغيرة</td><td><code>"Mohamed".ToLower()</code></td><td>"mohamed"</td></tr>
+            <tr><td><code>Trim()</code></td><td>حذف المسافات من الأطراف فقط</td><td><code>"  Ali  ".Trim()</code></td><td>"Ali"</td></tr>
+            <tr><td><code>Replace()</code></td><td>استبدال كلمة أو حرف بآخر</td><td><code>"Hello World".Replace("World", "C#")</code></td><td>"Hello C#"</td></tr>
+            <tr><td><code>Contains()</code></td><td>التحقق من الاحتواء (Case-Sensitive)</td><td><code>"Mohamed".Contains("med")</code></td><td>True</td></tr>
+            <tr><td><code>Split()</code></td><td>تقسيم النص لمصفوفة كلمات</td><td><code>"A B".Split(' ')</code></td><td>مصفوفة كلمتين</td></tr>
+          </tbody>
+        </table>
+        <h3>🔀 الجمل الشرطية (If Statements)</h3>
+        <pre><code>if (condition) {
+    // كود 1
+} else {
+    // كود 2
+}</code></pre>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة دوال النصوص الكاملة والـ Split النظيف</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20string%20text%20%3D%20%22%20%20Mohamed%20Ali%20%20%22%3B%0A%20%20%20%20Console.WriteLine(%22Trim%3A%20'%22%20%2B%20text.Trim()%20%2B%20%22'%22)%3B%0A%20%20%20%20Console.WriteLine(%22Upper%3A%20%22%20%2B%20text.ToUpper())%3B%0A%20%20%20%20Console.WriteLine(%22Replace%3A%20%22%20%2B%20text.Replace(%22Ali%22%2C%20%22Omar%22))%3B%0A%20%20%20%20Console.WriteLine(%22Contains%20'med'%3A%20%22%20%2B%20text.Contains(%22med%22))%3B%0A%0A%20%20%20%20string%20fullName%20%3D%20%22Mohamed%20%20%20Ali%22%3B%0A%20%20%20%20string%5B%5D%20parts%20%3D%20fullName.Split(' '%2C%20StringSplitOptions.RemoveEmptyEntries)%3B%0A%20%20%20%20Console.WriteLine(%22First%3A%20%22%20%2B%20parts%5B0%5D%20%2B%20%22%2C%20Second%3A%20%22%20%2B%20parts%5B1%5D)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. Else If, Ternary & Switch ── -->
+  <div class="section-card" id="s7">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">7</div>
+      <h2>Else If, Ternary & Switch</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>1. If / Else If / Else</h3>
+        <pre><code>if (score >= 90) {
+    Console.WriteLine("A");
+} else if (score >= 75) {
+    Console.WriteLine("B");
+} else {
+    Console.WriteLine("C");
+}</code></pre>
+        <h3>2. Ternary Operator (المعامل الشرطي المختصر)</h3>
+        <p><code>variable = (condition) ? true_expression : false_expression;</code></p>
+        <pre><code>int age = 20;
+string result = (age >= 18) ? "Adult" : "Minor"; // Adult</code></pre>
+        <h3>3. Switch Statement</h3>
+        <pre><code>switch (day) {
+    case 1:
+        Console.WriteLine("Monday");
+        break;
+    case 3:
+        Console.WriteLine("Wednesday");
+        break;
+    default:
+        Console.WriteLine("Other Day");
+        break;
+}</code></pre>
+        <p><b>ملاحظات هامة:</b> الكلمة <code>break</code> تخرج من كتلة الـ switch، والكلمة <code>default</code> تُنفذ عند عدم تطابق أي حالة.</p>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة الشروط المتعددة والـ Switch</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20score%20%3D%2085%3B%0A%20%20%20%20string%20status%20%3D%20(score%20%3E%3D%2050)%20%3F%20%22Pass%22%20%3A%20%22Fail%22%3B%0A%20%20%20%20Console.WriteLine(%22Status%3A%20%22%20%2B%20status)%3B%0A%0A%20%20%20%20int%20day%20%3D%203%3B%0A%20%20%20%20switch(day)%20%7B%0A%20%20%20%20%20%20case%201%3A%20Console.WriteLine(%22Monday%22)%3B%20break%3B%0A%20%20%20%20%20%20case%203%3A%20Console.WriteLine(%22Wednesday%22)%3B%20break%3B%0A%20%20%20%20%20%20default%3A%20Console.WriteLine(%22Other%22)%3B%20break%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 8. While, Do-While & For Loops ── -->
+  <div class="section-card" id="s8">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">8</div>
+      <h2>While, Do-While & For Loops</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>1. While Loop (الفحص أولاً ثم التنفيذ)</h3>
+        <pre><code>int i = 0;
+while (i < 5) {
+    Console.WriteLine(i);
+    i++; // ⚠️ إلزامي لتفادي الـ Infinite Loop
+}</code></pre>
+        <h3>2. Do-While Loop (التنفيذ أولاً ثم الفحص)</h3>
+        <p>يضمن تنفيذ الكود <b>مرة واحدة على الأقل</b> حتى لو كان الشرط غير محقق من البداية:</p>
+        <pre><code>int i = 0;
+do {
+    Console.WriteLine(i);
+    i++;
+} while (i < 5);</code></pre>
+        <h3>3. For Loop (تكرار معلوم المدى)</h3>
+        <p><code>for (statement1; statement2; statement3) { ... }</code></p>
+        <table>
+          <thead><tr><th>العبارة</th><th>توقيت التنفيذ</th><th>الدور الهندسي</th></tr></thead>
+          <tbody>
+            <tr><td>Statement 1</td><td>مرة واحدة قبل بدء الدوران</td><td>تهيئة العداد <code>int i = 0</code></td></tr>
+            <tr><td>Statement 2</td><td>قبل كل دورة</td><td>فحص شرط الاستمرار <code>i &lt; 5</code></td></tr>
+            <tr><td>Statement 3</td><td>بعد كل دورة</td><td>تحديث العداد <code>i++</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة الـ Loops الأساسية</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20Console.WriteLine(%22---%20While%20---%22)%3B%0A%20%20%20%20int%20i%20%3D%200%3B%0A%20%20%20%20while(i%20%3C%203)%20%7B%0A%20%20%20%20%20%20Console.WriteLine(%22w%3A%20%22%20%2B%20i)%3B%0A%20%20%20%20%20%20i%2B%2B%3B%0A%20%20%20%20%7D%0A%0A%20%20%20%20Console.WriteLine(%22---%20For%20---%22)%3B%0A%20%20%20%20for(int%20k%20%3D%200%3B%20k%20%3C%203%3B%20k%2B%2B)%20%7B%0A%20%20%20%20%20%20Console.WriteLine(%22f%3A%20%22%20%2B%20k)%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 9. Nested Loops & Foreach ── -->
+  <div class="section-card" id="s9">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">9</div>
+      <h2>Nested Loops & Foreach</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🔁 Nested Loops (الدورانات المتداخلة)</h3>
+        <pre><code>for (int i = 0; i < 3; i++) {
+    Console.WriteLine("Outer: " + i);
+    for (int j = 0; j < 3; j++) {
+        Console.WriteLine("  Inner: " + j);
+    }
+}</code></pre>
+        <p>ينتج عنها 3 دورات داخلية لكل دورة خارجية، بإجمالي 9 تكرارات (نموذج التعقيد <code>O(n²)</code>).</p>
+        <h3>🔄 Foreach Loop (الدوران المخصص للمجموعات)</h3>
+        <p>مخصص للقراءة المباشرة من المصفوفات والمجموعات بدون الحاجة لإدارة عداد Index يدوي:</p>
+        <pre><code>string[] cars = { "Volvo", "BMW", "Ford" };
+foreach (string car in cars) {
+    Console.WriteLine(car);
+}</code></pre>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة الـ Nested Loop والـ Foreach</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20for(int%20i%20%3D%200%3B%20i%20%3C%202%3B%20i%2B%2B)%20%7B%0A%20%20%20%20%20%20for(int%20j%20%3D%200%3B%20j%20%3C%202%3B%20j%2B%2B)%20%7B%0A%20%20%20%20%20%20%20%20Console.WriteLine(%24%22({i}%2C%20{j})%22)%3B%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%0A%20%20%20%20string%5B%5D%20cars%20%3D%20%7B%20%22Volvo%22%2C%20%22BMW%22%2C%20%22Ford%22%20%7D%3B%0A%20%20%20%20foreach(string%20c%20in%20cars)%20%7B%0A%20%20%20%20%20%20Console.Write(c%20%2B%20%22%20%22)%3B%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 10. Break, Continue & One-Dimensional Arrays ── -->
+  <div class="section-card" id="s10">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">10</div>
+      <h2>Break, Continue & One-Dimensional Arrays</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🛑 Break مقابل Continue</h3>
+        <ul>
+          <li><code>break</code> → إنهاء وخروج فوري وكامل من حلقة التكرار.</li>
+          <li><code>continue</code> → تخطي الدورة الحالية فقط والانتقال مباشرة للدورة التالية.</li>
+        </ul>
+        <h3>📦 1D Arrays (المصفوفات أحادية البعد)</h3>
+        <p>تُخزن مجموعة قيم من نفس النوع في متغير واحد تحت مؤشرات فهرسة تبدأ من الصفر (0-indexed):</p>
+        <pre><code>// الطريقة 1: الإسناد المباشر
+string[] cars = { "Volvo", "BMW", "Ford", "Mazda" };
+
+// الطريقة 2: تحديد الحجم أولاً ثم التعبئة
+int[] nums = new int[4];
+nums[0] = 10;
+nums[1] = 20;
+nums[2] = 30;
+nums[3] = 40;</code></pre>
+        <table>
+          <thead><tr><th>Index</th><th>0</th><th>1</th><th>2</th><th>3</th></tr></thead>
+          <tbody><tr><td><b>Value</b></td><td>10</td><td>20</td><td>30</td><td>40</td></tr></tbody>
+        </table>
+        <p>الوصول: <code>cars[0]</code> | التعديل: <code>cars[0] = "Opel";</code> | عدد العناصر: <code>cars.Length;</code></p>
+        <div class="note warn">
+          ⚠️ <b>قاعدة صارمة:</b> المصفوفة العادية في C# ذات <b>حجم ثابت (Fixed Size)</b> لا يمكن زيادته أو نقصانه بعد الإنشاء.
+        </div>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة Break والـ Array</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20for(int%20i%20%3D%200%3B%20i%20%3C%205%3B%20i%2B%2B)%20%7B%0A%20%20%20%20%20%20if(i%20%3D%3D%203)%20break%3B%0A%20%20%20%20%20%20Console.Write(i%20%2B%20%22%20%22)%3B%20%2F%2F%200%201%202%0A%20%20%20%20%7D%0A%20%20%20%20Console.WriteLine()%3B%0A%20%20%20%20string%5B%5D%20cars%20%3D%20%7B%20%22Volvo%22%2C%20%22BMW%22%2C%20%22Ford%22%2C%20%22Mazda%22%20%7D%3B%0A%20%20%20%20cars%5B0%5D%20%3D%20%22Opel%22%3B%0A%20%20%20%20Console.WriteLine(%22First%3A%20%22%20%2B%20cars%5B0%5D%20%2B%20%22%2C%20Length%3A%20%22%20%2B%20cars.Length)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 11. Array Traversal & Array Members ── -->
+  <div class="section-card" id="s11">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">11</div>
+      <h2>Array Traversal & Array Members</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🔁 المرور على المصفوفات (Traversal)</h3>
+        <pre><code>// 1. باستخدام for
+for (int i = 0; i < cars.Length; i++) {
+    Console.WriteLine(cars[i]);
+}
+
+// 2. باستخدام foreach (أنظف وأسرع)
+foreach (string car in cars) {
+    Console.WriteLine(car);
+}</code></pre>
+        <h3>📊 دوال وخصائص المصفوفات الشهيرة</h3>
+        <p>تتطلب استدعاء مكتبة LINQ: <code>using System.Linq;</code></p>
+        <ul>
+          <li><code>Array.Sort(arr);</code> → ترتيب تصاعدي (أبجدي للنصوص، رقمي للأعداد).</li>
+          <li><code>arr.Max();</code> → إرجاع أكبر قيمة.</li>
+          <li><code>arr.Min();</code> → إرجاع أصغر قيمة.</li>
+          <li><code>arr.Sum();</code> → مجموع كافة العناصر.</li>
+          <li><code>arr.Length;</code> → خاصية (Property) ترجع عدد العناصر.</li>
+        </ul>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة ترتيب وحسابات المصفوفة</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Ausing%20System.Linq%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%5B%5D%20nums%20%3D%20%7B%205%2C%202%2C%209%2C%201%2C%207%20%7D%3B%0A%20%20%20%20Console.WriteLine(%22Max%3A%20%22%20%2B%20nums.Max())%3B%0A%20%20%20%20Console.WriteLine(%22Min%3A%20%22%20%2B%20nums.Min())%3B%0A%20%20%20%20Console.WriteLine(%22Sum%3A%20%22%20%2B%20nums.Sum())%3B%0A%20%20%20%20Array.Sort(nums)%3B%0A%20%20%20%20Console.Write(%22Sorted%3A%20%22)%3B%0A%20%20%20%20foreach(int%20n%20in%20nums)%20Console.Write(n%20%2B%20%22%20%22)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 12. Multidimensional & Jagged Arrays ── -->
+  <div class="section-card" id="s12">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">12</div>
+      <h2>Multidimensional & Jagged Arrays</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>📐 2D Rectangular Arrays (المصفوفات ثنائية الأبعاد)</h3>
+        <p>شبكة مستطيلة ثابتة الأبعاد، تُعرّف بفاصلة داخل الأقواس <code>int[,]</code>:</p>
+        <pre><code>int[,] numbers = { { 1, 4, 2 }, { 3, 6, 8 } };</code></pre>
+        <table>
+          <thead><tr><th></th><th>Col 0</th><th>Col 1</th><th>Col 2</th></tr></thead>
+          <tbody>
+            <tr><td><b>Row 0</b></td><td>1</td><td>4</td><td>2</td></tr>
+            <tr><td><b>Row 1</b></td><td>3</td><td>6</td><td>8</td></tr>
+          </tbody>
+        </table>
+        <p>الوصول: <code>numbers[0, 2]; // 2</code></p>
+        <h4>الدوران المتداخل السليم:</h4>
+        <pre><code>for (int i = 0; i < numbers.GetLength(0); i++) {      // عدد الصفوف
+    for (int j = 0; j < numbers.GetLength(1); j++) {  // عدد الأعمدة (✅ j++ وليس i++)
+        Console.Write(numbers[i, j] + " ");
+    }
+    Console.WriteLine();
+}</code></pre>
+        <h3>🪚 Jagged Arrays (المصفوفات المسننة) <code>int[][]</code></h3>
+        <p>مصفوفة عناصرها عبارة عن مصفوفات، وكل صف يمكن أن يكون له <b>طول مختلف تماماً</b>:</p>
+        <pre><code>int[][] jagged = new int[3][];
+jagged[0] = new int[] { 1, 2 };          // عنصرين
+jagged[1] = new int[] { 3, 4, 5, 6 };    // 4 عناصر
+jagged[2] = new int[] { 7 };             // عنصر واحد
+
+Console.WriteLine(jagged[1][3]); // 6</code></pre>
+        <h4>مقارنة معمارية:</h4>
+        <table>
+          <thead><tr><th>الميزة</th><th>2D Array (<code>int[,]</code>)</th><th>Jagged Array (<code>int[][]</code>)</th></tr></thead>
+          <tbody>
+            <tr><td>أطوال الصفوف</td><td><b>متساوية إجبارياً</b></td><td><b>مختلفة ومرنة</b></td></tr>
+            <tr><td>طريقة الوصول</td><td><code>arr[row, col]</code></td><td><code>arr[row][col]</code></td></tr>
+            <tr><td>التخزين في الذاكرة</td><td>كتلة متصلة واحدة (Single block)</td><td>مصفوفات فرعية متفرقة في الـ Heap</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة الـ 2D والـ Jagged Arrays</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%5B%2C%5D%20grid%20%3D%20%7B%20%7B%201%2C%204%2C%202%20%7D%2C%20%7B%203%2C%206%2C%208%20%7D%20%7D%3B%0A%20%20%20%20Console.WriteLine(%22Grid%5B0%2C2%5D%3A%20%22%20%2B%20grid%5B0%2C%202%5D)%3B%0A%0A%20%20%20%20int%5B%5D%5B%5D%20jagged%20%3D%20new%20int%5B2%5D%5B%5D%3B%0A%20%20%20%20jagged%5B0%5D%20%3D%20new%20int%5B%5D%20%7B%2010%2C%2020%20%7D%3B%0A%20%20%20%20jagged%5B1%5D%20%3D%20new%20int%5B%5D%20%7B%2030%2C%2040%2C%2050%20%7D%3B%0A%20%20%20%20Console.WriteLine(%22Jagged%5B1%5D%5B2%5D%3A%20%22%20%2B%20jagged%5B1%5D%5B2%5D)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 13. Methods, Parameters & Overloading ── -->
+  <div class="section-card" id="s13">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">13</div>
+      <h2>Methods, Parameters & Overloading</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>⚙️ Methods (الدوال)</h3>
+        <p>كتلة برمجية مستقلة لا تعمل إلا عند استدعائها صراحة:</p>
+        <pre><code>class Program {
+    static void myMethod() { // إنشاء الدالة
+        Console.WriteLine("Hi!");
+    }
+    static void Main(string[] args) {
+        myMethod(); // استدعاء الدالة
+    }
+}</code></pre>
+        <ul>
+          <li><code>void</code> → لا تُرجع أي قيمة.</li>
+          <li><code>static</code> → تتبع الكلاس مباشرة ولا تتطلب إنشاء كائن (Object).</li>
+        </ul>
+        <p><b>Parameters vs Arguments:</b> المتغير في توقيع الدالة يُسمى <b>Parameter</b>، بينما القيمة المُرسلة أثناء الاستدعاء تُسمى <b>Argument</b>.</p>
+        <h3>🎯 Method Overloading (التحميل الزائد للدوال)</h3>
+        <p>تعريف دوال تحمل <b>نفس الاسم تماماً</b> ولكن بـ <b>توقيع مختلف (Different Parameters)</b>:</p>
+        <pre><code>static int Add(int a, int b) { return a + b; }
+static double Add(double a, double b) { return a + b; }
+static int Add(int a, int b, int c) { return a + b + c; }</code></pre>
+        <div class="note warn">
+          ⚠️ <b>قاعدة هامة في الـ Interviews:</b> تغيير نوع الإرجاع (Return Type) وحده <b>لا يعتبر Overloading صالحاً</b> ويسبب Compile Error:
+          <br><code>static int Calc(int x) { ... }</code>
+          <br><code>// static double Calc(int x) { ... } ❌ خطأ تركيبي</code>
+        </div>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة استدعاء وتعدد أشكال الدوال (Overloading)</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20int%20Add(int%20a%2C%20int%20b)%20%7B%20return%20a%20%2B%20b%3B%20%7D%0A%20%20static%20double%20Add(double%20a%2C%20double%20b)%20%7B%20return%20a%20%2B%20b%3B%20%7D%0A%20%20static%20int%20Add(int%20a%2C%20int%20b%2C%20int%20c)%20%7B%20return%20a%20%2B%20b%20%2B%20c%3B%20%7D%0A%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20Console.WriteLine(%22Int%20Add%3A%20%22%20%2B%20Add(2%2C%203))%3B%0A%20%20%20%20Console.WriteLine(%22Double%20Add%3A%20%22%20%2B%20Add(2.5%2C%203.1))%3B%0A%20%20%20%20Console.WriteLine(%223%20Params%20Add%3A%20%22%20%2B%20Add(1%2C%202%2C%203))%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 14. Default Parameters & Return Values ── -->
+  <div class="section-card" id="s14">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">14</div>
+      <h2>Default Parameters & Return Values</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <h3>🌍 Default Parameters (المعاملات الافتراضية)</h3>
+        <p>إذا تم استدعاء الدالة بدون تمرير الـ Argument، تستخدم القيمة الافتراضية المحددة لها:</p>
+        <pre><code>static void myMethod(string country = "Norway") {
+    Console.WriteLine(country);
+}
+
+myMethod("India"); // India
+myMethod();        // Norway (القيمة الافتراضية)</code></pre>
+        <div class="note warn">
+          ⚠️ <b>قاعدة الترتيب الإلزامية:</b> المعاملات الافتراضية يجب أن تُكتب <b>بعد</b> المعاملات العادية وليس قبلها:
+          <br><code>✅ static void x(string name, string country = "Egypt")</code>
+          <br><code>❌ static void x(string country = "Egypt", string name) // خطأ فادح</code>
+        </div>
+        <h3>🔙 Return Values (القيم المرجعة)</h3>
+        <p>يتم استبدال الكلمة <code>void</code> بنوع البيانات المُراد إرجاعه واستخدام الكلمة المفتاحية <code>return</code>:</p>
+        <pre><code>static int myMethod(int x) {
+    return 5 + x;
+}
+Console.WriteLine(myMethod(3)); // 8</code></pre>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة المعاملات الافتراضية والقيم المرجعة</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Greet(string%20name%2C%20string%20country%20%3D%20%22Norway%22)%20%7B%0A%20%20%20%20Console.WriteLine(%24%22Hello%20{name}%20from%20{country}%22)%3B%0A%20%20%7D%0A%20%20static%20int%20Calc(int%20x)%20%7B%0A%20%20%20%20return%205%20%2B%20x%3B%0A%20%20%7D%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20Greet(%22Ahmed%22)%3B%20%20%20%20%20%20%20%20%20%20%20%20%20%2F%2F%20Norway%0A%20%20%20%20Greet(%22Omar%22%2C%20%22Egypt%22)%3B%20%20%2F%2F%20Egypt%0A%20%20%20%20Console.WriteLine(%22Result%3A%20%22%20%2B%20Calc(3))%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 15. ref & out Parameters ── -->
+  <div class="section-card" id="s15">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">15</div>
+      <h2>ref & out Parameters</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <p>تُتيح كلتا الكلمتين تمرير المتغير بالمرجع (By Reference) للتأثير في المتغير الأصلي أو إرجاع قيم إضافية:</p>
+        <h3>1. ref (التمرير بالمرجع لتعديل المتغير الأصلي)</h3>
+        <p>يجب تهيئة المتغير بقيمة أولية قبل استدعاء الدالة:</p>
+        <pre><code>static void AddTen(ref int x) {
+    x += 10;
+}
+int number = 5;
+AddTen(ref number);
+Console.WriteLine(number); // 15 (تغيرت القيمة الأصلية)</code></pre>
+        <h3>2. out (إلزام الدالة بتعيين قيمة)</h3>
+        <p>لا تشترط تهيئة المتغير قبل الاستدعاء، ولكن الدالة <b>مُلزمة إجبارياً بتعيين قيمة له قبل الخروج</b>. الاستخدام النموذجي الواقعي هو الدالة <code>int.TryParse</code>:</p>
+        <pre><code>string input = "123";
+if (int.TryParse(input, out int value)) {
+    Console.WriteLine("Parsed: " + value); // 123
+} else {
+    Console.WriteLine("Invalid integer");
+}</code></pre>
+        <h4>جدول المقارنة الحاسم:</h4>
+        <table>
+          <thead><tr><th>القاعدة</th><th><code>ref</code></th><th><code>out</code></th></tr></thead>
+          <tbody>
+            <tr><td>هل يلزم إعطاؤه قيمة قبل الاستدعاء؟</td><td>✅ نعم إجباري</td><td>❌ لا يشترط</td></tr>
+            <tr><td>هل الدالة مجبرة على إسناد قيمة له؟</td><td>❌ لا يشترط</td><td>✅ نعم إجباري على كل مسارات الإرجاع</td></tr>
+            <tr><td>هل يمكن للدالة قراءة قيمته السابقة؟</td><td>✅ نعم</td><td>❌ لا يمكن القراءة إلا بعد الإسناد</td></tr>
+            <tr><td>الاستخدام الهندسي النموذجي</td><td>تعديل متغير موجود مسبقاً</td><td>إرجاع أكثر من قيمة من دالة واحدة</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة ref و out عملياً</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20AddTen(ref%20int%20x)%20%7B%20x%20%2B%3D%2010%3B%20%7D%0A%20%20static%20void%20GetData(out%20int%20val)%20%7B%20val%20%3D%2050%3B%20%7D%0A%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20num%20%3D%205%3B%0A%20%20%20%20AddTen(ref%20num)%3B%0A%20%20%20%20Console.WriteLine(%22After%20ref%3A%20%22%20%2B%20num)%3B%20%2F%2F%2015%0A%0A%20%20%20%20GetData(out%20int%20result)%3B%0A%20%20%20%20Console.WriteLine(%22After%20out%3A%20%22%20%2B%20result)%3B%20%2F%2F%2050%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 16. List<T> — Dynamic Collection ── -->
+  <div class="section-card" id="s16">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">16</div>
+      <h2>List&lt;T&gt; — Dynamic Collection</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <p>على عكس المصفوفات العادية ذات الحجم الثابت، تتميز <code>List&lt;T&gt;</code> بكونها <b>ديناميكية الحجم (تتمدد وتنكمش تلقائياً)</b> مع إضافة وحذف العناصر:</p>
+        <pre><code>using System.Collections.Generic;
+
+List<int> nums = new List<int>();
+nums.Add(10);           // إضافة عنصر للنهاية
+nums.Add(20);
+nums.Add(30);
+
+Console.WriteLine(nums[0]);           // 10 (الوصول بالفهرس)
+Console.WriteLine(nums.Count);        // 3 (خاصية العدد وليس .Length)
+
+nums.Remove(20);                      // حذف أول عنصر مطابق بالقيمة
+nums.RemoveAt(0);                     // حذف العنصر بالمؤشر 0
+Console.WriteLine(nums.Contains(30)); // True
+nums.Sort();                          // ترتيب تصاعدي
+nums.Clear();                         // حذف كافة العناصر</code></pre>
+        <h3>أهم دوال وخصائص <code>List&lt;T&gt;</code>:</h3>
+        <table>
+          <thead><tr><th>الدالة / الخاصية</th><th>المعنى والوظيفة</th></tr></thead>
+          <tbody>
+            <tr><td><code>Add(value)</code></td><td>إضافة عنصر جديد في نهاية القائمة</td></tr>
+            <tr><td><code>Remove(value)</code></td><td>حذف أول عنصر يطابق القيمة المعطاة</td></tr>
+            <tr><td><code>RemoveAt(index)</code></td><td>حذف العنصر الموجود في مؤشر فهرسة محدد</td></tr>
+            <tr><td><code>Count</code></td><td>عدد العناصر الفعلية الموجودة حالياً داخل القائمة</td></tr>
+            <tr><td><code>Contains(value)</code></td><td>ترجع <code>true</code> إذا كانت القيمة موجودة</td></tr>
+            <tr><td><code>Sort()</code></td><td>ترتيب العناصر تصاعدياً</td></tr>
+            <tr><td><code>Clear()</code></td><td>مسح وإفراغ القائمة تماماً من كل عناصرها</td></tr>
+          </tbody>
+        </table>
+        <h3>المقارنة الهندسية: Array مقابل <code>List&lt;T&gt;</code></h3>
+        <table>
+          <thead><tr><th>الميزة</th><th>Array (<code>int[]</code>)</th><th>List (<code>List&lt;int&gt;</code>)</th></tr></thead>
+          <tbody>
+            <tr><td>الحجم (Size)</td><td><b>ثابت تماماً</b> بعد الإنشاء</td><td><b>ديناميكي</b> يتمدد وينكمش تلقائياً</td></tr>
+            <tr><td>خاصية العدد</td><td><code>.Length</code></td><td><code>.Count</code></td></tr>
+            <tr><td>إضافة وحذف عناصر</td><td>❌ غير مدعوم مباشرة</td><td><code>Add()</code> و <code>Remove()</code> ✅</td></tr>
+            <tr><td>السرعة والأداء</td><td>أسرع قليلاً ومباشرة في الذاكرة</td><td>أبطأ بجزء طفيف لوجود إدارة التمدد</td></tr>
+            <tr><td>متى تختارها؟</td><td>عندما يكون عدد العناصر معلوماً وثابتاً</td><td>عندما يتغير عدد العناصر أثناء التشغيل</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة عمليات List&lt;T&gt;</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Ausing%20System.Collections.Generic%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20List%3Cint%3E%20nums%20%3D%20new%20List%3Cint%3E()%3B%0A%20%20%20%20nums.Add(30)%3B%0A%20%20%20%20nums.Add(10)%3B%0A%20%20%20%20nums.Add(20)%3B%0A%20%20%20%20Console.WriteLine(%22Count%3A%20%22%20%2B%20nums.Count)%3B%0A%20%20%20%20nums.Sort()%3B%0A%20%20%20%20Console.Write(%22Sorted%20List%3A%20%22)%3B%0A%20%20%20%20foreach(int%20n%20in%20nums)%20Console.Write(n%20%2B%20%22%20%22)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 17. Big-O: Time & Space Complexity ── -->
+  <div class="section-card" id="s17">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">17</div>
+      <h2>Big-O: Time & Space Complexity</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <p>يصف رمز Big-O <b>معدل نمو استهلاك الخوارزمية للموارد (الوقت والذاكرة)</b> مع زيادة حجم المدخلات <code>n</code>. هو يصف معدل النمو وليس عدد الثواني.</p>
+        <h3>جدول درجات التعقيد الزمني الشائعة:</h3>
+        <table>
+          <thead><tr><th>الرمز</th><th>الاسم الهندسي</th><th>مثال عملي شهير</th></tr></thead>
+          <tbody>
+            <tr><td><code>O(1)</code></td><td>Constant (ثابت)</td><td>الوصول لعنصر مصفوفة بالفهرس <code>arr[0]</code></td></tr>
+            <tr><td><code>O(log n)</code></td><td>Logarithmic (لوغاريتمي)</td><td>البحث الثنائي (Binary Search) في مصفوفة مرتبة</td></tr>
+            <tr><td><code>O(n)</code></td><td>Linear (خطي)</td><td>دوران واحد للمرور على كافة عناصر المصفوفة</td></tr>
+            <tr><td><code>O(n log n)</code></td><td>Log-Linear</td><td>خوارزميات الترتيب الفعالة مثل Merge Sort و <code>Array.Sort()</code></td></tr>
+            <tr><td><code>O(n²)</code></td><td>Quadratic (تربيعي)</td><td>دوران متداخل (Nested Loop) يدور كل منهما <code>n</code> مرة</td></tr>
+            <tr><td><code>O(2ⁿ)</code></td><td>Exponential (أسي)</td><td>خوارزميات الـ Brute-Force التكرارية مثل فيبوناتشي التراجعي</td></tr>
+          </tbody>
+        </table>
+        <div class="note tip">
+          <b>ترتيب الأداء من الأفضل إلى الأسوأ:</b>
+          <br><code>O(1) &lt; O(log n) &lt; O(n) &lt; O(n log n) &lt; O(n²) &lt; O(2ⁿ)</code>
+          <br><b>الأفضل ◄─────────────────────────────────────────────► الأسوأ</b>
+        </div>
+        <h3>⚡ القواعد الذهبية لحل مسائل الامتحانات (Fast Rules):</h3>
+        <table>
+          <thead><tr><th>القاعدة البرمجية</th><th>التعقيد الزمني الناتج</th></tr></thead>
+          <tbody>
+            <tr><td>دوران مفرد بسيط على <code>n</code> عنصر</td><td><code>O(n)</code></td></tr>
+            <tr><td>دوران متداخل (Nested) كلاهما يدور <code>n</code> مرة</td><td><code>O(n²)</code></td></tr>
+            <tr><td>دورانين منفصلين يتبعان بعضهما على التوالي</td><td><code>O(n + n) = O(n)</code> (تجاهل الجمع)</td></tr>
+            <tr><td>تجاهل الثوابت والمعاملات الرقمية</td><td><code>O(3n)</code> تُبسط إلى <code>O(n)</code></td></tr>
+            <tr><td>الإبقاء على الحد الأعلى نمواً وحذف الأقل</td><td><code>O(n² + n)</code> تُبسط إلى <code>O(n²)</code></td></tr>
+          </tbody>
+        </table>
+        <h4>تعقيد الذاكرة (Space Complexity):</h4>
+        <ul>
+          <li><code>O(1)</code> Extra Space → استخدام عدد ثابت من المتغيرات مهما كبر حجم المدخلات.</li>
+          <li><code>O(n)</code> Extra Space → إنشاء مصفوفة أو قائمة جديدة يتناسب حجمها مع حجم المدخلات.</li>
+        </ul>
+      </div>
+      <div class="compiler-block">
+        <label>🧪 تجربة ومقارنة عمليات O(1) و O(n) و O(n²)</label>
+        <div class="iframe-wrap">
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20n%20%3D%204%3B%0A%20%20%20%20int%5B%5D%20arr%20%3D%20%7B%2010%2C%2020%2C%2030%2C%2040%20%7D%3B%0A%0A%20%20%20%20%2F%2F%20O(1)%20-%20Constant%0A%20%20%20%20Console.WriteLine(%22O(1)%20Access%3A%20%22%20%2B%20arr%5B0%5D)%3B%0A%0A%20%20%20%20%2F%2F%20O(n)%20-%20Linear%0A%20%20%20%20Console.Write(%22O(n)%20Loop%3A%20%22)%3B%0A%20%20%20%20for(int%20i%20%3D%200%3B%20i%20%3C%20n%3B%20i%2B%2B)%20Console.Write(arr%5Bi%5D%20%2B%20%22%20%22)%3B%0A%20%20%20%20Console.WriteLine()%3B%0A%0A%20%20%20%20%2F%2F%20O(n%C2%B2)%20-%20Quadratic%0A%20%20%20%20Console.Write(%22O(n%C2%B2)%20Pairs%3A%20%22)%3B%0A%20%20%20%20for(int%20i%20%3D%200%3B%20i%20%3C%20n%3B%20i%2B%2B)%0A%20%20%20%20%20%20for(int%20j%20%3D%200%3B%20j%20%3C%20n%3B%20j%2B%2B)%0A%20%20%20%20%20%20%20%20Console.Write(%24%22({i}%2C{j})%20%22)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 18. Common Pitfalls & Coding Guidelines ── -->
+  <div class="section-card" id="s18">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">18</div>
+      <h2>Common Pitfalls & Coding Guidelines</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <p>أخطاء شائعة جداً يقع فيها المبرمجون والطلاب في الامتحانات، تم تجميعها مع الحل الهندسي المعتمد الصحيح لكل منها:</p>
+      </div>
+      <div class="pitfall-grid">
+        <div class="pitfall-box">
+          <h4>1. خطأ دمج النصوص بـ <code>string.Concat()</code></h4>
+          <p>استخدام <code>+</code> داخل دالة Concat يجعلها بلا فائدة، والصحيح استخدام فاصلة بين الوسائط:</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>Console.WriteLine(string.Concat(fname + lname));</code></div>
+            <div class="diff-good">✅ <code>Console.WriteLine(string.Concat(fname, lname));</code></div>
+          </div>
+        </div>
+
+        <div class="pitfall-box">
+          <h4>2. خطأ الجمع مع التعريف في سطر واحد <code>int y += x;</code></h4>
+          <p>لا يمكن في لغة C# الجمع التراكمي على متغير أثناء الإعلان عنه لأول مرة؛ يجب تعريفه وإسناد قيمة أولية أولاً:</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>int x = 10; int y += x;</code></div>
+            <div class="diff-good">✅ <code>int x = 10; int y = 5; y += x;</code></div>
+          </div>
+        </div>
+
+        <div class="pitfall-box">
+          <h4>3. نسيان زيادة العداد في الـ While Loop</h4>
+          <p>إهمال كتابة <code>i++</code> داخل الـ while يؤدي فوراً إلى تجميد البرنامج في دورة لا نهائية (Infinite Loop):</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>while(i &lt; 5) { Console.WriteLine(i); }</code></div>
+            <div class="diff-good">✅ <code>while(i &lt; 5) { Console.WriteLine(i); i++; }</code></div>
+          </div>
+        </div>
+
+        <div class="pitfall-box">
+          <h4>4. زيادة عداد الصف في الدوران الداخلي للـ 2D Array</h4>
+          <p>خطأ نسخي شائع بزيادة <code>i++</code> بدلاً من <code>j++</code> في الدوران الداخلي للأعمدة:</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>for(int j=0; j &lt; arr.GetLength(1); i++)</code></div>
+            <div class="diff-good">✅ <code>for(int j=0; j &lt; arr.GetLength(1); j++)</code></div>
+          </div>
+        </div>
+
+        <div class="pitfall-box">
+          <h4>5. حالة الأحرف في دوال C# (حساسية الـ Case)</h4>
+          <p>استدعاء الدالة بحرف كبير من كائن نصي يسبب Compile Error لأن دوال الكائنات في C# تبدأ بأحرف صغيرة أو بحسب التوثيق الرسمي:</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>name.IndexOf("m");</code> مع <code>Name.IndexOf</code> بحرف N كبير كاسم متغير</div>
+            <div class="diff-good">✅ <code>name.IndexOf("m");</code> مع مطابقة دقيقة لاسم المتغير الصغير</div>
+          </div>
+        </div>
+
+        <div class="pitfall-box">
+          <h4>6. الخلط بين <code>.Length</code> و <code>.Count</code></h4>
+          <p>المصفوفات تستخدم الخاصية <code>.Length</code> بينما القوائم <code>List&lt;T&gt;</code> تستخدم <code>.Count</code>:</p>
+          <div class="diff-container">
+            <div class="diff-bad">❌ <code>list.Length</code> أو <code>arr.Count</code></div>
+            <div class="diff-good">✅ <code>arr.Length</code> للمصفوفة و <code>list.Count</code> للقائمة</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 19. Revision Checklist ── -->
+  <div class="section-card" id="s19">
+    <div class="sec-header" onclick="toggle(this)">
+      <div class="num">19</div>
+      <h2>Revision Checklist — قائمة التحقق للاختبار</h2>
+      <span class="arrow">▼</span>
+    </div>
+    <div class="sec-body">
+      <div class="explanation">
+        <p>قائمة تحقق تفاعلية للمراجعة الذاتية قبل دخول الامتحان. اضغط على أي بند لتعليمه كمكتمل (يتم حفظ تقدمك تلقائياً في المتصفح):</p>
+      </div>
+      <div class="checklist-wrap" id="checklist">
+        <div class="check-item" onclick="toggleCheck(this, 1)">
+          <input type="checkbox" id="chk1" />
+          <label for="chk1">فهم الفرق الجوهري بين المصفوفات ثابتة الحجم (Arrays) والقوائم الديناميكية المتمددة (List&lt;T&gt;).</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 2)">
+          <input type="checkbox" id="chk2" />
+          <label for="chk2">إتقان متى نستخدم <code>ref</code> ومتى نستخدم <code>out</code>، وفهم لماذا تعتمد الدالة <code>int.TryParse</code> على <code>out</code>.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 3)">
+          <input type="checkbox" id="chk3" />
+          <label for="chk3">القدرة على استخراج التعقيد الزمني <code>O(1)</code> و <code>O(log n)</code> و <code>O(n)</code> و <code>O(n²)</code> بمجرد النظر للكود.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 4)">
+          <input type="checkbox" id="chk4" />
+          <label for="chk4">حفظ وفهم دوال النصوص الثمانية الأساسية، وتذكر أن السلاسل النصية غير قابلة للتعديل (Immutable).</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 5)">
+          <input type="checkbox" id="chk5" />
+          <label for="chk5">التمييز الكامل بين المصفوفة ثنائية الأبعاد المستطيلة <code>int[,]</code> والمسننة متغيرة الأطوال <code>int[][]</code>.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 6)">
+          <input type="checkbox" id="chk6" />
+          <label for="chk6">معرفة شروط الـ Method Overloading وتذكر أن تغيير Return Type وحده لا يصحح التحميل الزائد.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 7)">
+          <input type="checkbox" id="chk7" />
+          <label for="chk7">مراجعة حدود الحلقات وشروط التحديث (i++) لمنع حدوث الحلقات اللانهائية (Infinite Loops).</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 8)">
+          <input type="checkbox" id="chk8" />
+          <label for="chk8">استخدام الخاصية الصحيحة للعدد: <code>arr.Length</code> للمصفوفة، <code>text.Length</code> للنص، <code>list.Count</code> للقائمة.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 9)">
+          <input type="checkbox" id="chk9" />
+          <label for="chk9">تذكر أن <code>while</code> تفحص الشرط أولاً، بينما <code>do-while</code> تنفذ دورة واحدة إجبارية قبل أي فحص.</label>
+        </div>
+        <div class="check-item" onclick="toggleCheck(this, 10)">
+          <input type="checkbox" id="chk10" />
+          <label for="chk10">إدراك أن <code>break</code> تقطع حلقة التكرار وتخرج منها، بينما <code>continue</code> تتخطى الدورة الحالية فقط.</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ═══════════════ BACK TO TOP ═══════════════ -->
+<button id="backToTop" onclick="scrollToTop()" title="العودة للأعلى">▲</button>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  🎓 <strong>C# & DSA Comprehensive Interactive Reference</strong> — مهندس أحمد الفلاح
+  <br>
+  مبني وموثق وفق أعلى المعايير الهندسية بالتعاون بين <strong>Antigravity & OpenCode</strong> | مدعوم بمحرر الأكواد المباشر OneCompiler
+</footer>
+
+<!-- ═══════════════ SCRIPT ═══════════════ -->
+<script>
+  // Accordion Toggle
+  function toggle(header) {
+    const card = header.closest('.section-card');
+    card.classList.toggle('collapsed');
+  }
+
+  // Smooth Scroll & Auto Expand on TOC Click
+  document.querySelectorAll('nav.toc a').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = a.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (target) {
+        target.classList.remove('collapsed');
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // TOC Filter
+  function filterToc() {
+    const query = document.getElementById('tocSearch').value.toLowerCase();
+    const items = document.querySelectorAll('#tocList li');
+    items.forEach(li => {
+      const text = li.innerText.toLowerCase();
+      li.style.display = text.includes(query) ? 'list-item' : 'none';
+    });
+  }
+
+  // Back to Top Button
+  window.onscroll = function() {
+    const btn = document.getElementById('backToTop');
+    if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+      btn.style.display = 'flex';
+    } else {
+      btn.style.display = 'none';
+    }
+  };
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Checklist Persistence with LocalStorage
+  function toggleCheck(wrapper, id) {
+    const checkbox = wrapper.querySelector('input[type="checkbox"]');
+    // If clicked on wrapper and not directly on checkbox
+    if (event.target !== checkbox) {
+      checkbox.checked = !checkbox.checked;
+    }
+    wrapper.classList.toggle('done', checkbox.checked);
+    localStorage.setItem('dsa_check_' + id, checkbox.checked ? '1' : '0');
+  }
+
+  // Restore Checklist State on Load
+  window.addEventListener('DOMContentLoaded', () => {
+    for (let i = 1; i <= 10; i++) {
+      const saved = localStorage.getItem('dsa_check_' + i);
+      if (saved === '1') {
+        const item = document.querySelectorAll('.check-item')[i - 1];
+        if (item) {
+          const chk = item.querySelector('input[type="checkbox"]');
+          chk.checked = true;
+          item.classList.add('done');
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
