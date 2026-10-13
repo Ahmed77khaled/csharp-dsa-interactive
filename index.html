@@ -1373,29 +1373,38 @@ Console.WriteLine("this is my number: " + x); // this is my number: 123</code></
             <tr><td>3</td><td><code>float</code></td><td>5.5, 6.6</td><td>4 bytes</td><td>Fractional number</td></tr>
             <tr><td>4</td><td><code>double</code></td><td>7.7, 8.8</td><td>8 bytes</td><td>Fractional number</td></tr>
             <tr><td>5</td><td><code>bool</code></td><td>true, false</td><td>1 byte</td><td>Boolean</td></tr>
-            <tr><td>6</td><td><code>char</code></td><td>'A', 'B'</td><td>2 bytes</td><td>Character</td></tr>
-            <tr><td>7</td><td><code>string</code></td><td>"Mohamed"</td><td>2 bytes per char</td><td>String</td></tr>
+            <tr><td>6</td><td><code>char</code></td><td>A, B</td><td>2 bytes</td><td>Character</td></tr>
+            <tr><td>7</td><td><code>string</code></td><td>Mohamed</td><td>2 bytes per char</td><td>String</td></tr>
           </tbody>
         </table>
         <div class="note tip">
-          💡 <b>ملاحظة الدقة:</b> النوع <code>float</code> يكفي لـ 7 أرقام عشرية، بينما النوع <code>double</code> يدعم دقة حتى 15 رقماً عشرياً.
+          💡 <b>Note:</b> <code>float</code> = 7 decimal digits precision | <code>double</code> = 15 decimal digits precision.
         </div>
-        <h4>قواعد اللواحق (Literal Suffix Rules):</h4>
+        <pre><code class="language-csharp">int x = 40;
+long x = 150000000L;
+float x = 5.75F;
+double x = 5.755D;
+bool isFirstTask = false;
+char myGrade = 'A';
+string greeting = "Mohamed";</code></pre>
+        <h4>Literal suffix rules (قواعد اللواحق):</h4>
         <table>
-          <thead><tr><th>النوع</th><th>اللاحقة الإلزامية</th><th>طريقة الإحاطة</th></tr></thead>
+          <thead>
+            <tr><th>Type</th><th>Suffix</th><th>Quotes</th></tr>
+          </thead>
           <tbody>
-            <tr><td><code>long</code></td><td><code>L</code> في النهاية</td><td>—</td></tr>
-            <tr><td><code>float</code></td><td><code>F</code> في النهاية</td><td>—</td></tr>
-            <tr><td><code>double</code></td><td><code>D</code> في النهاية</td><td>—</td></tr>
-            <tr><td><code>char</code></td><td>—</td><td>علامات تنصيص فردية <code>' '</code></td></tr>
-            <tr><td><code>string</code></td><td>—</td><td>علامات تنصيص زوجية <code>" "</code></td></tr>
+            <tr><td><code>long</code></td><td><code>L</code></td><td>—</td></tr>
+            <tr><td><code>float</code></td><td><code>F</code></td><td>—</td></tr>
+            <tr><td><code>double</code></td><td><code>D</code></td><td>—</td></tr>
+            <tr><td><code>char</code></td><td>—</td><td><code>' '</code> single</td></tr>
+            <tr><td><code>string</code></td><td>—</td><td><code>" "</code> double</td></tr>
           </tbody>
         </table>
       </div>
       <div class="compiler-block">
         <label>🧪 جرّب أنواع البيانات واللواحق</label>
         <div class="iframe-wrap">
-          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20x%20%3D%2040%3B%0A%20%20%20%20long%20big%20%3D%20150000000L%3B%0A%20%20%20%20float%20f%20%3D%205.75F%3B%0A%20%20%20%20double%20d%20%3D%205.755D%3B%0A%20%20%20%20bool%20isFirstTask%20%3D%20false%3B%0A%20%20%20%20char%20myGrade%20%3D%20'A'%3B%0A%20%20%20%20string%20greeting%20%3D%20%22Mohamed%22%3B%0A%20%20%20%20Console.WriteLine(%22int%3A%20%22%20%2B%20x)%3B%0A%20%20%20%20Console.WriteLine(%22long%3A%20%22%20%2B%20big)%3B%0A%20%20%20%20Console.WriteLine(%22float%3A%20%22%20%2B%20f)%3B%0A%20%20%20%20Console.WriteLine(%22double%3A%20%22%20%2B%20d)%3B%0A%20%20%20%20Console.WriteLine(%22char%3A%20%22%20%2B%20myGrade)%3B%0A%20%20%20%20Console.WriteLine(%22string%3A%20%22%20%2B%20greeting)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
+          <iframe src="https://onecompiler.com/embed/csharp?theme=dark&hideNew=true&hideLanguageSelection=true&code=using%20System%3B%0Aclass%20Program%20%7B%0A%20%20static%20void%20Main()%20%7B%0A%20%20%20%20int%20x%20%3D%2040%3B%0A%20%20%20%20long%20bigNum%20%3D%20150000000L%3B%0A%20%20%20%20float%20floatNum%20%3D%205.75F%3B%0A%20%20%20%20double%20doubleNum%20%3D%205.755D%3B%0A%20%20%20%20bool%20isFirstTask%20%3D%20false%3B%0A%20%20%20%20char%20myGrade%20%3D%20'A'%3B%0A%20%20%20%20string%20greeting%20%3D%20%22Mohamed%22%3B%0A%20%20%20%20Console.WriteLine(%22int%3A%20%22%20%2B%20x)%3B%0A%20%20%20%20Console.WriteLine(%22long%3A%20%22%20%2B%20bigNum)%3B%0A%20%20%20%20Console.WriteLine(%22float%3A%20%22%20%2B%20floatNum)%3B%0A%20%20%20%20Console.WriteLine(%22double%3A%20%22%20%2B%20doubleNum)%3B%0A%20%20%20%20Console.WriteLine(%22bool%3A%20%22%20%2B%20isFirstTask)%3B%0A%20%20%20%20Console.WriteLine(%22char%3A%20%22%20%2B%20myGrade)%3B%0A%20%20%20%20Console.WriteLine(%22string%3A%20%22%20%2B%20greeting)%3B%0A%20%20%7D%0A%7D" allowfullscreen></iframe>
         </div>
       </div>
     </div>
