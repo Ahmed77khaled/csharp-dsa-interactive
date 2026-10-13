@@ -960,21 +960,179 @@
     color: var(--brand-violet-dark);
   }
 
-  /* ── Responsive ── */
+    /* ── Responsive & Mobile Design (Figma Mobile Specs 375px) ── */
   @media (max-width: 992px) {
     .intro-content-row { grid-template-columns: 1fr; }
     .learning-map-card { order: 2; }
     .editorial-intro { order: 1; }
-    .workspace-header { padding: 0 16px; }
+    .workspace-header { padding: 0 20px; }
     .main-nav-links { display: none; }
   }
+
   @media (max-width: 768px) {
-    nav.toc ol { columns: 1; }
-    .guide-hero-title { font-size: 28px; }
-    .iframe-wrap iframe { height: 380px; }
-    .diff-container { flex-direction: column; }
-    .toc-header { flex-direction: column; align-items: stretch; }
-    .search-box { width: 100%; }
+    /* ── Workspace Header on Mobile (Figma 76px) ── */
+    .workspace-header {
+      height: 76px;
+      padding: 0 16px;
+    }
+    .brand-label {
+      display: none;
+    }
+    .brand-name {
+      font-size: 22px;
+    }
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+    }
+    .theme-switcher {
+      width: 80px;
+      height: 38px;
+    }
+    .theme-option {
+      width: 34px;
+      height: 30px;
+    }
+
+    /* ── Guide Hero on Mobile ── */
+    .guide-intro-wrapper {
+      padding: 0 16px;
+      margin: 20px auto;
+      gap: 16px;
+    }
+    .editorial-intro {
+      padding: 24px 18px;
+      border-radius: 16px;
+    }
+    .guide-hero-title {
+      font-size: 26px;
+      line-height: 1.35;
+    }
+    .guide-hero-desc {
+      font-size: 14.5px;
+      line-height: 1.7;
+    }
+    .metadata-chips-row {
+      gap: 6px;
+    }
+    .meta-chip {
+      font-size: 11px;
+      padding: 3px 8px;
+    }
+    .hero-actions-row {
+      flex-direction: column;
+      width: 100%;
+      gap: 10px;
+    }
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      justify-content: center;
+      padding: 11px 16px;
+    }
+    .learning-guidance-banner {
+      padding: 14px 16px;
+      font-size: 13px;
+      border-radius: 10px;
+    }
+
+    /* ── Table of Contents on Mobile ── */
+    nav.toc {
+      padding: 0 16px;
+      margin-bottom: 24px;
+    }
+    .toc-inner {
+      padding: 18px 16px;
+      border-radius: 14px;
+    }
+    nav.toc ol {
+      columns: 1;
+    }
+    .toc-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+    }
+    .toc-header h2 {
+      font-size: 1.15rem;
+    }
+    .search-box {
+      width: 100%;
+      font-size: 13px;
+    }
+
+    /* ── Main & Section Cards on Mobile ── */
+    main {
+      padding: 0 16px;
+      margin-bottom: 40px;
+      gap: 14px;
+    }
+    .section-card {
+      border-radius: 12px;
+      scroll-margin-top: 86px;
+    }
+    .sec-header {
+      padding: 15px 16px;
+      gap: 10px;
+    }
+    .sec-header .num {
+      width: 34px;
+      height: 34px;
+      font-size: 13px;
+    }
+    .sec-header h2 {
+      font-size: 1.05rem;
+    }
+    .sec-header .arrow {
+      width: 28px;
+      height: 28px;
+      font-size: 11px;
+    }
+    .sec-body {
+      padding: 18px 16px 20px;
+    }
+    .explanation h3 {
+      font-size: 1.02rem;
+      margin: 18px 0 8px;
+    }
+    .explanation p, .explanation li {
+      font-size: 14px;
+    }
+    pre {
+      padding: 14px 12px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+    .iframe-wrap iframe {
+      height: 360px;
+    }
+
+    /* ── Diff Cards & Pitfalls on Mobile ── */
+    .diff-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .diff-bad, .diff-good {
+      min-width: 100%;
+      padding: 12px 14px;
+      font-size: 12.5px;
+    }
+
+    /* ── Checklist on Mobile ── */
+    .check-item {
+      padding: 12px 14px;
+      font-size: 13.5px;
+      gap: 10px;
+    }
+
+    /* ── Floating Back to Top Button on Mobile ── */
+    #backToTop {
+      bottom: 16px;
+      left: 16px;
+      padding: 8px 14px;
+      font-size: 12px;
+    }
   }
 </style>
 </head>
