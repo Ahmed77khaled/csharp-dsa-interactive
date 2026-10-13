@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>C# & DSA — المرجع التفاعلي الشامل (19 قسماً)</title>
   <style>
-    :root {
+        :root {
       --primary: #1e3a8a;
       --primary-dark: #172554;
       --accent:  #2563eb;
@@ -20,12 +20,94 @@
       --text:    #1e293b;
       --muted:   #64748b;
       --radius:  12px;
+      --code-bg: #f1f5f9;
+      --code-color: #0f172a;
+      --table-row-alt: #f8fafc;
+      --table-hover: #f1f5f9;
+      --note-text: #1e3a8a;
+      --warn-text: #991b1b;
+      --tip-text: #166534;
+      --exercise-bg: #fefce8;
+      --exercise-border: #ca8a04;
+      --exercise-text: #92400e;
+      --pitfall-bg: #ffffff;
+      --diff-bad-bg: #fef2f2;
+      --diff-good-bg: #f0fdf4;
+      --check-bg: #f8fafc;
+      --check-hover: #f1f5f9;
+      --check-done-bg: #f0fdf4;
+      --check-done-border: #86efac;
+      --check-done-text: #166534;
+      --header-bg: linear-gradient(135deg, #172554, #1e3a8a, #2563eb);
+    }
+
+    body.dark {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --accent:  #60a5fa;
+      --accent-light: #1e293b;
+      --green:   #22c55e;
+      --green-light: #064e3b;
+      --red:     #ef4444;
+      --red-light: #450a0a;
+      --bg:      #0b0f19;
+      --card:    #111827;
+      --border:  #1f2937;
+      --text:    #f3f4f6;
+      --muted:   #9ca3af;
+      --code-bg: #1f2937;
+      --code-color: #e5e7eb;
+      --table-row-alt: #161e2e;
+      --table-hover: #1f2937;
+      --note-text: #93c5fd;
+      --warn-text: #fca5a5;
+      --tip-text: #86efac;
+      --exercise-bg: #291e05;
+      --exercise-border: #a16207;
+      --exercise-text: #fef08a;
+      --pitfall-bg: #111827;
+      --diff-bad-bg: #301010;
+      --diff-good-bg: #0d2919;
+      --check-bg: #161e2e;
+      --check-hover: #1f2937;
+      --check-done-bg: #064e3b;
+      --check-done-border: #10b981;
+      --check-done-text: #6ee7b7;
+      --header-bg: linear-gradient(135deg, #030712, #0f172a, #1e293b);
+    }
+
+    /* ── Theme Toggle Button ── */
+    .theme-toggle-btn {
+      position: fixed;
+      top: 18px;
+      left: 20px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: .88rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+      transition: all .25s ease;
+      backdrop-filter: blur(8px);
+    }
+    .theme-toggle-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+      border-color: var(--accent);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
+      transition: background .3s ease, color .3s ease;
       line-height: 1.8;
       direction: rtl;
       text-align: right;
@@ -39,8 +121,8 @@
       font-family: 'Consolas', 'Courier New', monospace;
     }
     .explanation code, td code, .note code, p code, li code, .exercise code, .pitfall-box code {
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
+      background: var(--code-bg);
+      border: 1px solid var(--border);
       padding: 2px 7px;
       border-radius: 5px;
       font-size: .88rem;
@@ -49,7 +131,7 @@
       display: inline-block;
       vertical-align: baseline;
       text-align: left;
-      color: #0f172a;
+      color: var(--code-color);
     }
     pre {
       background: #0f172a;
@@ -73,7 +155,7 @@
 
     /* ── Header ── */
     header {
-      background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--accent));
+      background: var(--header-bg);
       color: #fff;
       padding: 42px 20px 32px;
       text-align: center;
@@ -119,6 +201,8 @@
     .search-box {
       padding: 8px 14px;
       border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
       border-radius: 8px;
       font-size: .88rem;
       width: 240px;
@@ -175,7 +259,7 @@
     .section-card.collapsed .sec-body { display: none; }
 
     /* ── Explanations & Headings ── */
-    .explanation { margin-bottom: 20px; font-size: .96rem; color: #334155; }
+    .explanation { margin-bottom: 20px; font-size: .96rem; color: var(--text); }
     .explanation h3 { font-size: 1.08rem; color: var(--primary); margin: 18px 0 8px; font-weight: 700; }
     .explanation h4 { font-size: .98rem; color: #1e293b; margin: 12px 0 6px; font-weight: 600; }
     .explanation p { margin-bottom: 10px; }
@@ -186,8 +270,8 @@
     table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: .9rem; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
     th { background: var(--primary); color: #fff; padding: 10px 14px; text-align: right; font-weight: 600; }
     td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
-    tr:nth-child(even) td { background: #f8fafc; }
-    tr:hover td { background: #f1f5f9; }
+    tr:nth-child(even) td { background: var(--table-row-alt); }
+    tr:hover td { background: var(--table-hover); }
 
     /* ── Note Callouts ── */
     .note {
@@ -227,14 +311,14 @@
 
     /* ── Exercise ── */
     .exercise {
-      background: #fefce8;
-      border: 1px dashed #ca8a04;
+      background: var(--exercise-bg);
+      border: 1px dashed var(--exercise-border);
       border-radius: 8px;
       padding: 14px 18px;
       margin-top: 18px;
       font-size: .92rem;
     }
-    .exercise strong { color: #92400e; }
+    .exercise strong { color: var(--exercise-text); }
 
     /* ── Common Pitfalls Cards ── */
     .pitfall-grid {
@@ -247,13 +331,13 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 16px;
-      background: #fff;
+      background: var(--pitfall-bg);
     }
     .pitfall-box h4 { margin-bottom: 8px; font-size: 1rem; color: var(--primary); }
     .diff-container { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
     .diff-bad, .diff-good { flex: 1; min-width: 260px; padding: 12px 14px; border-radius: 6px; font-size: .88rem; }
-    .diff-bad { background: #fef2f2; border-right: 4px solid var(--red); color: #991b1b; }
-    .diff-good { background: #f0fdf4; border-right: 4px solid var(--green); color: #166534; }
+    .diff-bad { background: var(--diff-bad-bg); border-right: 4px solid var(--red); color: var(--warn-text); }
+    .diff-good { background: var(--diff-good-bg); border-right: 4px solid var(--green); color: var(--tip-text); }
 
     /* ── Checklist ── */
     .checklist-wrap {
@@ -266,7 +350,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      background: #f8fafc;
+      background: var(--check-bg);
       padding: 12px 16px;
       border-radius: 8px;
       border: 1px solid var(--border);
@@ -274,12 +358,12 @@
       user-select: none;
       transition: all .2s;
     }
-    .check-item:hover { background: #f1f5f9; }
+    .check-item:hover { background: var(--check-hover); }
     .check-item.done {
-      background: #f0fdf4;
-      border-color: #86efac;
+      background: var(--check-done-bg);
+      border-color: var(--check-done-border);
       text-decoration: line-through;
-      color: #166534;
+      color: var(--check-done-text);
     }
     .check-item input[type="checkbox"] {
       width: 18px; height: 18px;
@@ -310,7 +394,7 @@
 
     /* ── Footer ── */
     footer {
-      background: #fff;
+      background: var(--card);
       text-align: center;
       padding: 28px 20px;
       font-size: .88rem;
@@ -329,6 +413,12 @@
   </style>
 </head>
 <body>
+
+<!-- ═══════════════ THEME TOGGLE ═══════════════ -->
+<button id="themeToggle" onclick="toggleTheme()" class="theme-toggle-btn" title="تبديل الوضع الليلي / النهاري">
+  <span id="themeIcon">🌙</span>
+  <span id="themeText">الوضع الليلي</span>
+</button>
 
 <!-- ═══════════════ HEADER ═══════════════ -->
 <header>
@@ -1362,6 +1452,34 @@ nums.Clear();                         // حذف كافة العناصر</code></
       }
     }
   });
+  // Theme Toggle & Persistence
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('dsa_theme', isDark ? 'dark' : 'light');
+    updateThemeUI(isDark);
+  }
+
+  function updateThemeUI(isDark) {
+    const icon = document.getElementById('themeIcon');
+    const text = document.getElementById('themeText');
+    if (isDark) {
+      icon.textContent = '☀️';
+      text.textContent = 'الوضع النهاري';
+    } else {
+      icon.textContent = '🌙';
+      text.textContent = 'الوضع الليلي';
+    }
+  }
+
+  // Check saved theme or system preference on startup
+  (function initTheme() {
+    const saved = localStorage.getItem('dsa_theme');
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (saved === 'dark' || (!saved && prefersDark)) {
+      document.body.classList.add('dark');
+      updateThemeUI(true);
+    }
+  })();
 </script>
 </body>
 </html>
